@@ -1,30 +1,44 @@
-# Task Management App
+# 📝 Task Management App
 
-A simple task management web application that allows you to create, read, and edit tasks. Each task is saved as a `.txt` file, and the app provides an interface to read the task details, update the task name, and edit the task content.
+A full-featured task management application where users can securely log in, manage personal notes, mark bookmarks, and perform full CRUD operations — all with a clean and modern UI.
 
-### Home Page
-![Home Page](./images/1.png)
-### Read Task
-![Read Task](./images/2.png)
-### Edit Task
-![Edit Task](./images/3.png)
+---
 
-## Features
+## 🌟 Features
 
-- **Create Task**: Allows users to create a new task by specifying a task name and task details.
-- **Read Task**: Displays the content of a task file in a readable format.
-- **Edit Task**: Enables users to change both the task name and its content.
-- **File-based Storage**: All tasks are stored as `.txt` files in a local folder.
+- 🔐 **Authentication** – JWT-based secure login/register.
+- 📋 **CRUD for Notes** – Create, read, update, and delete notes.
+- 📎 **Bookmarks** – Add URL bookmarks to notes.
+- ❤️ **Favorites** – Mark notes as favorite.
+- 👤 **User-specific Data** – Only show notes for the logged-in user.
+- 🧾 **Rich UI** – TailwindCSS-powered interface with modals and animations.
 
-## Technologies Used
+---
 
-- **Node.js** with Express for the server-side handling.
-- **EJS** for rendering dynamic HTML templates.
-- **File System (fs)** module for reading and writing tasks as `.txt` files.
-- **HTML/CSS** for basic frontend layout.
+## 🖼️ Screenshots
 
-## Installation
+| Login | Dashboard (Notes) | Read View | Edit View |
+|:-----:|:-----------------:|:---------:|:---------:|
+| ![](./images/1.png) | ![](./images/2.png) | ![](./images/3.png) | ![](./images/4.png) |
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/ShubhamNegi4/task-management-app.git
+---
+
+## 🚀 Project Setup
+
+### 🔧 Backend Setup
+
+```bash
+# Clone repository
+git clone https://github.com/ShubhamNegi4/task-management-app.git
+cd task-management-app
+
+# Install backend dependencies
+npm install
+
+# Start MongoDB locally or use Atlas
+# Create .env file with the following
+MONGO_URL=mongodb://localhost:27017/taskapp
+JWT_SECRET=your_jwt_secret
+
+# Start the server
+npm run dev

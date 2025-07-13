@@ -1,36 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Notes Management App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .bg-cream-50 { background-color: #fdfdf7; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeInUp { animation: fadeInUp 0.5s ease-out both; }
+  </style>
 </head>
-<body>
-    <div class = "main w-full min-h-screen bg-zinc-900">
-        <div class = "form p-10 text-white">
-            <form action="/create" method="post">
-                <input class = "block px-5 py-2 w-full bg-zinc-800 rounded-md outline-none"type="text"placeholder= "Title goes here." name="title">
-                <textarea class = "block px-5 py-2 mt-2 w-full  bg-zinc-800 resize-none rounded-md outline-none"placeholder="Write your task details here" name="details"></textarea>
-                <input class ="mt-2 bg-blue-600 px-5 py-2 rounded-md"type="submit" value = "Create Task">
-            </form>
-        </div>
-        <div class = "tasks p-10 flex gap-3 flex-wrap">
-            <% if(files.length > 0){%>
-                <%files.forEach(function(val){%>
-                    <div class = "task min-w-72 px-3 py-4 bg-zinc-800 rounded-md">
-                        <h1 class = "text-white text-3xl tracking-tighter "><%=val%></h1>
-                        <div class = "flex w-full justify-between item-center mt-3">
-                            <a class = "text-blue-500 inline-block"href="/file/<%= val%>">Read More.</a>
-                            <a class = "text-zinc-600"href="/edit/<%= val%>">Edit</a>
-                        </div>
-                    </div>
+<body class="bg-cream-50 text-gray-800 min-h-screen antialiased font-sans">
+  
+  <nav class="bg-white shadow-sm">
+  <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-indigo-600">My Notes</h1>
+    
+    <div class="flex gap-3 items-center">
+      <button onclick="document.getElementById('create-modal').classList.remove('hidden')" 
+              class="bg-indigo-600 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-500 transition">
+        + New Note
+      </button>
 
-                <%})%>
-            <%} else{%>
-                <h3 class = "text-zinc-600">No task yet.</h3>
-            <%}%> 
-        </div>
+      <form action="/logout" method="POST">
+        <button type="submit" 
+                class="bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-400 transition">
+          Logout
+        </button>
+      </form>
     </div>
+  </div>
+</nav>
+
+  <main class="container mx-auto px-6 py-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% if (notes.length) { %>
+        <% notes.forEach(note => { %>
+          <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition animate-fadeInUp">
+            <div class="p-6">
+              <h2 class="text-xl font-semibold text-gray-900 mb-3"><%= note.Title %></h2>
+              <p class="text-gray-700 line-clamp-3 leading-relaxed"><%= note.Description %></p>
+            </div>
+            <div class="bg-gray-50 px-6 py-4 flex justify-between items-center text-sm">
+              <div class="space-x-4">
+                <a href="/file/<%= note.Title %>" class="text-indigo-600 font-medium hover:underline">Read More</a>
+                <a href="/edit/<%= note.Title %>" class="text-yellow-600 font-medium hover:underline">Edit</a>
+              </div>
+              <form action="/delete" method="POST" onsubmit="return confirm('Are you sure you want to delete this note?')" class="inline">
+                <input type="hidden" name="title" value="<%= note.Title %>" />
+                <button type="submit" class="text-red-500 hover:underline font-medium">Delete</button>
+              </form>
+            </div>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <div class="col-span-full text-center text-gray-500 py-20">
+          <p class="text-lg">No notes yet. Click “+ New Note” to get started!</p>
+        </div>
+      <% } %>
+    </div>
+  </main>
+
+  <!-- Create Modal -->
+  <div id="create-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-2xl w-full max-w-md mx-4 p-6 shadow-lg animate-fadeInUp">
+      <div class="flex justify-between items-center mb-5">
+        <h3 class="text-xl font-semibold text-gray-800">Create New Note</h3>
+        <button onclick="document.getElementById('create-modal').classList.add('hidden')" class="text-gray-600 hover:text-gray-800 transition">
+          &times;
+        </button>
+      </div>
+      <form action="/create" method="post" class="space-y-4">
+        <div>
+          <label class="block text-gray-700 mb-1">Title</label>
+          <input name="title" type="text" required placeholder="Enter title"
+                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-indigo-500 outline-none transition" />
+        </div>
+        <div>
+          <label class="block text-gray-700 mb-1">Bookmark/URL</label>
+          <input name="url" type="text" required placeholder="Enter Url"
+                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-indigo-500 outline-none transition" />
+        </div>
+        <div>
+          <label class="block text-gray-700 mb-1">Description</label>
+          <textarea name="details" required rows="4" placeholder="Enter description"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-indigo-500 outline-none resize-none transition"></textarea>
+        </div>
+        <div class="text-right">
+          <button type="submit" class="bg-indigo-600 text-white px-5 py-2 rounded-lg shadow hover:bg-indigo-500 transition">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </body>
 </html>
