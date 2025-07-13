@@ -1,6 +1,6 @@
 # 📝 Task Management App
 
-A full-featured task management application where users can securely log in, manage personal notes, mark bookmarks, and perform full CRUD operations — all with a clean and modern UI.
+**A full-featured task management application where users can securely log in, manage personal notes, mark bookmarks, and perform full CRUD operations — all with a clean and modern UI.**
 
 ---
 
@@ -17,9 +17,17 @@ A full-featured task management application where users can securely log in, man
 
 ## 🖼️ Screenshots
 
-| Login | Dashboard (Notes) | Read View | Edit View |
-|:-----:|:-----------------:|:---------:|:---------:|
-| ![](./images/1.png) | ![](./images/2.png) | ![](./images/3.png) | ![](./images/4.png) |
+### Login
+![](./images/1.png)
+
+### Dashboard (Notes)
+![](./images/2.png)
+
+### Read View
+![](./images/3.png)
+
+### Edit View
+![](./images/4.png)
 
 ---
 
@@ -29,7 +37,7 @@ A full-featured task management application where users can securely log in, man
 
 ```bash
 # Clone repository
-git clone https://github.com/ShubhamNegi4/task-management-app.git
+git clone [https://github.com/ShubhamNegi4/task-management-app.git](https://github.com/ShubhamNegi4/task-management-app.git)
 cd task-management-app
 
 # Install backend dependencies
